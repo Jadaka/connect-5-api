@@ -1,5 +1,7 @@
 import express from 'express';
 
 const app = express();
+const port = 3001;
 
-console.log('hello');
+app.listen(port);
+console.log(`app is now listening on port ${port}`);
