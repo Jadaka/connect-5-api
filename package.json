@@ -5,6 +5,20 @@
     "socket.io": "^1.7.2"
   },
   "devDependencies": {
+    "babel-core": "^6.21.0",
+    "babel-polyfill": "^6.20.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-stage-0": "^6.16.0",
+    "babel-register": "^6.18.0",
+    "eslint": "^3.12.2",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^3.0.2",
+    "eslint-plugin-react": "^6.8.0",
     "nodemon": "^1.11.0"
+  },
+  "scripts": {
+    "start": "nodemon bin/entry.js --exec 'npm run lint --silent && node'",
+    "lint": "eslint -c eslint.config.js src/**/*.js"
   }
 }
