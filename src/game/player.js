@@ -5,8 +5,9 @@
  *  @param {OBJECT} socket - socket.io instance
  */
 class Player {
-  constructor(socket) {
+  constructor({ socket, model }) {
     this.socket = socket;
+    this.model = model;
   }
 }
 
