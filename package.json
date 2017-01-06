@@ -15,10 +15,12 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.2",
     "eslint-plugin-react": "^6.8.0",
+    "jest": "^18.1.0",
     "nodemon": "^1.11.0"
   },
   "scripts": {
     "start": "nodemon bin/entry.js --exec 'npm run lint --silent && node'",
-    "lint": "eslint -c eslint.config.js src/**/*.js"
+    "lint": "eslint -c eslint.config.js src/**/*.js",
+    "test": "jest"
   }
 }
