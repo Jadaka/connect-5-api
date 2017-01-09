@@ -5,26 +5,26 @@ const mockSocket = {
   on: jest.fn(),
   emit: jest.fn(),
 };
-const mockModel = {
+const mockUser = {
   update: jest.fn(),
 };
 
 describe('the player instance', () => {
-  it('stores a socket and model object', () => {
+  it('stores a socket and user object', () => {
     const socket = Object.assign({}, mockSocket);
-    const model = Object.assign({}, mockSocket);
+    const user = Object.assign({}, mockSocket);
     player = new Player({
       socket,
-      model,
+      user,
     });
     expect(player.socket).toBe(socket);
-    expect(player.model).toBe(model);
+    expect(player.user).toBe(user);
   });
 
-  it('throws when a socket and model are not provided', () => {
+  it('throws when a socket and user are not provided', () => {
     expect(() => new Player({})).toThrow();
     expect(() => new Player({ socket: {} })).toThrow();
-    expect(() => new Player({ model: {} })).toThrow();
+    expect(() => new Player({ user: {} })).toThrow();
   });
 });
 
@@ -32,7 +32,7 @@ describe('the win function', () => {
   beforeEach(() => {
     player = new Player({
       socket: Object.assign({}, mockSocket),
-      model : Object.assign({}, mockModel),
+      user : Object.assign({}, mockUser),
     });
   });
 
@@ -40,9 +40,9 @@ describe('the win function', () => {
     expect(typeof player.win).toBe('function');
   });
 
-  it('updates the model when called', () => {
+  it('updates the user when called', () => {
     player.win();
-    expect(player.model.update).toHaveBeenCalled();
+    expect(player.user.update).toHaveBeenCalled();
   })
 });
 
@@ -50,7 +50,7 @@ describe('the lose function', () => {
   beforeEach(() => {
     player = new Player({
       socket: Object.assign({}, mockSocket),
-      model : Object.assign({}, mockModel),
+      user : Object.assign({}, mockUser),
     });
   });
 
@@ -58,8 +58,8 @@ describe('the lose function', () => {
     expect(typeof player.lose).toBe('function');
   });
 
-  it('updates the model when called', () => {
+  it('updates the user when called', () => {
     player.lose();
-    expect(player.model.update).toHaveBeenCalled();
+    expect(player.user.update).toHaveBeenCalled();
   })
 })

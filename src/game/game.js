@@ -9,9 +9,15 @@ import Player from './player';
  *
  */
 class Game {
-  constructor(socket1, socket2) {
-    this.player1 = new Player(socket1);
-    this.player2 = new Player(socket2);
+  constructor({ user1, socket1, user2, socket2 }) {
+    this.player1 = new Player({ 
+      socket: socket1,
+      user: user1
+    });
+    this.player2 = new Player({ 
+      socket: socket2,
+      user: user2
+    });
   }
 }
 
