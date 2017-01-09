@@ -4,8 +4,11 @@ import Player from './player';
  *
  *  Game Class
  *
- *  @param {OBJECT} socket1 - socket.io instance
- *  @param {OBJECT} socket2 - socket.io instance
+ *  @param {OPTIONS}
+ *    socket1: socket.io instance
+ *    socket2: socket.io instance
+ *    user1  : sequelize user model instance
+ *    user2  : sequelize user model instance
  *
  */
 class Game {
