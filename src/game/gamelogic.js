@@ -1,11 +1,11 @@
 /**
  * 
- *  Game Logic Constructor
+ *  Gamelogic Constructor
  *
- *  Game logic instances are primary used to maintain board state of any game.
+ *  Game logic instances are primary used to maintain board state of each game.
  *
  */
-class Game {
+class Gamelogic {
   constructor() {
     this.board = [];
     this._winner = null;
@@ -30,3 +30,5 @@ class Game {
 
   }
 }
+
+export default Gamelogic;
