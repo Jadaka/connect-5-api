@@ -2,8 +2,10 @@
  *
  *  Player Class
  *
- *  @param {OBJECT} socket - socket.io instance
- *  @param {OBJECT} user - sequelize user instance
+ *  @param {OBJECT} options
+ *    socket: socket.io instance
+ *    user  : sequelize user instance
+ *
  */
 class Player {
   constructor({ socket, user }) {
