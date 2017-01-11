@@ -1,3 +1,5 @@
+import { some } from 'lodash';
+
 /**
  * 
  *  Gamelogic Constructor
@@ -56,63 +58,70 @@ class Gamelogic {
      *  Utility function which returns a boolean for whether there is a winning player or not
      *  It also overwrites the winner property of this logic instance when a winner is found
      */
+    const [row, col] = this._idToCoords(this._lastplayed);
+    return some(
+      ['_checkRow', '_checkCol', '_checkMajorDiagnol', '_checkMinorDiagnol']
+        .map(toCheck => {
+          const result = this[toCheck](row, col);
+          if (result) {
+            this.winner = this._lastplayer;
+          }
+          return result;
+        })
+    );
   }
 
   _checkRow(row, col) {
-    const count = 1;
     const origCol = col;
-    while (this.board[row][++col] === id) {
+    let count = 1;
+    while (this.board[row][++col] === this._lastplayer) {
       count++;
-      col--;
     }
     col = origCol;
-    while (this.board[row][--col] === id) {
+    while (this.board[row][--col] === this._lastplayer) {
       count++;
-      col++;
     }
     return count >= 5;
   }
 
   _checkCol(row, col) {
-    const count = 1;
     const origRow = row;
-    while (this.board[++row] && this.board[row][col] === id) {
+    let count = 1;
+    while (this.board[++row] && this.board[row][col] === this._lastplayer) {
       count++;
     }
     row = origRow;
-    while (this.board[--row] && this.board[row][col] === id) {
+    while (this.board[--row] && this.board[row][col] === this._lastplayer) {
       count++;
     }
     return count >= 5;
   }
 
   _checkMajorDiagnol(row, col) {
-    const count = 1;
     const orig = [row, col];
-    while (this.board[row + 1] && this.board[++row][++col] === id) {
+    let count = 1;
+    while (this.board[row + 1] && this.board[++row][++col] === this._lastplayer) {
       count++;
     }
     [row, col] = orig;
-    while (this.board[row - 1] && this.board[--row][--col] === id) {
+    while (this.board[row - 1] && this.board[--row][--col] === this._lastplayer) {
       count++;
     }
     return count >= 5;
   }
 
   _checkMinorDiagnol(row, col) {
-    const count = 1;
     const orig = [row, col];
-    while (this.board[row + 1] && this.board[++row][--col] === id) {
+    let count = 1;
+    while (this.board[row + 1] && this.board[++row][--col] === this._lastplayer) {
       count++;
     }
     [row, col] = orig;
-    while (this.board[row - 1] && this.board[--row][++col] === id) {
+    while (this.board[row - 1] && this.board[--row][++col] === this._lastplayer) {
       count++;
     }
     return count >= 5;
   }
-
-
 }
 
 export default Gamelogic;

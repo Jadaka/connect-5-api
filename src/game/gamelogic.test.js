@@ -84,7 +84,7 @@ describe('The logic instance', () => {
     });
 
     it('should return false for a non-winning board', () => {
-      expect(gamelogic._checkWinner()).toBe(null);
+      expect(gamelogic._checkWinner()).toBe(false);
       [
         ['ef'],
         ['aa', 'ab', 'ac', 'ad'],
