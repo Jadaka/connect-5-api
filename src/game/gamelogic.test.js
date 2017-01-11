@@ -14,6 +14,12 @@ describe('The logic instance', () => {
     expect(allZeroes).toBe(true);
   });
 
+  it('should contain a dictionary of letter to integer pariings', () => {
+    expect(gamelogic._dict.a).toBe(0);
+    expect(gamelogic._dict.e).toBe(4);
+    expect(gamelogic._dict.s).toBe(18);
+  });
+
   describe('the set function', () => {
     it('should exist', () => {
       expect(typeof gamelogic.set).toBe('function');
@@ -33,8 +39,23 @@ describe('The logic instance', () => {
   });
 
   describe('the check winner function', () => {
+
     it('should exist', () => {
-      expect(gamelogic.checkWinner).toBe('function');
+      expect(gamelogic._checkWinner).toBe('function');
+    });
+
+    it('should return null for a non-winning board', () => {
+      expect(gamelogic._checkWinner()).toBe(null);
+      [
+        ['ef'],
+        ['aa', 'ab', 'ac', 'ad'],
+        ['aa', 'bb', 'cc', 'dd'],
+        ['ab', 'mn', 'bo', 'ss']
+      ].forEach(toPlay => {
+        gamelogic = new Gamelogic();
+        toPlay.forEach(id => gamelogic.set(id, 1));
+        expect(gamelogic.checkWinner()).toBe(null);
+      });
     });
   });
 });
