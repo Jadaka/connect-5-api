@@ -1,5 +1,6 @@
 import Game from './game';
 import Player from './player';
+import Gamelogic from './gamelogic';
 
 let game;
 const mockSocket = {
@@ -31,5 +32,9 @@ describe('the game instance', () => {
   it('should create player instances and store them', () => {
     expect(game.player1 instanceof Player).toBe(true);
     expect(game.player2 instanceof Player).toBe(true);
+  });
+
+  it('should instantiate a new gamelogic instance and store it', () => {
+    expect(game.logic instanceof Gamelogic).toBe(true);
   });
 });

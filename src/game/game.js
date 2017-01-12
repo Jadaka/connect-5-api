@@ -1,4 +1,5 @@
 import Player from './player';
+import Gamelogic from './gamelogic';
 
 /**
  *
@@ -21,6 +22,7 @@ class Game {
       socket: socket2,
       user: user2
     });
+    this.logic = new Gamelogic();
   }
 }
 
