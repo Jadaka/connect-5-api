@@ -23,6 +23,14 @@ class Player {
   lose() {
     this.user.update();
   }
+
+  emit(event, data) {
+    this.socket.emit(event, data);
+  }
+
+  on(event, cb) {
+    this.socket.on(event, cb);
+  }
 }
 
 export default Player;

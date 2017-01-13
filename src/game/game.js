@@ -1,4 +1,5 @@
 import Player from './player';
+import Gamelogic from './gamelogic';
 
 /**
  *
@@ -20,6 +21,28 @@ class Game {
     this.player2 = new Player({ 
       socket: socket2,
       user: user2
+    });
+
+    // game logic
+    this.logic = new Gamelogic();
+    
+    // record moves for stats purposes
+    this._moves = [];
+  }
+
+  initialize() {
+    this.emit('server.');
+  }
+
+  emit(event, data) {
+    ['player1', 'player2'].forEach(player => {
+      this[player].emit(event, data);
+    });
+  }
+
+  on(event, cb) {
+    ['player1', 'player2'].forEach(player => {
+      this[player].on(event, cb);
     });
   }
 }
