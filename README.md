@@ -9,9 +9,9 @@ Connect 5 back-end API using Socket.IO
 
 Certain eventing requires a duplex communication, so the documentation is organized by the **intent** of the events.
 
-Within each event contains the various data fields that are required / optional. Any field is required unless specified otherwise by a `?` symbol.
+Within each event, there are data fields that are required / optional. Any field is required unless specified otherwise by a `?` symbol.
 
-When a client initiates an emission, the server will always acknowledge the receiving of that signal with an event name identical to the client emission with `.response` appended to the end of it in case the client must render/complete a task in response.
+When a client initiates an emission, the server will always acknowledge the receival of that signal with an event name identical to the client emission with `.response` appended to the end of it.
 
 When a server initiates an emission, the client **must** acknowledge the completion of any client-side changes that must render/complete before the server knows to move on. This is done by emitting an event identical to the server emission with `.response` appended to the end of it.
 
