@@ -37,4 +37,25 @@ describe('the game instance', () => {
   it('should instantiate a new gamelogic instance and store it', () => {
     expect(game.logic instanceof Gamelogic).toBe(true);
   });
+
+  it('should hold a moves array to store played moves', () => {
+    expect(Array.isArray(game._moves)).toBe(true);
+  });
+
+  it('should have an emit method that invokes emit on both clients', () => {
+    game.emit('hello', {
+      hello: 'world'
+    });
+    expect(typeof game.emit).toBe('function');
+    expect(socket1.emit.mock.calls[0]).toEqual([ 'hello', { hello: 'world' } ]);
+    expect(socket2.emit.mock.calls[0]).toEqual([ 'hello', { hello: 'world' } ]);
+  });
+
+  it('should have an on method that invokes listen on both clients', () => {
+    const fn = () => {};
+    game.on('wazzah', fn);
+    expect(typeof game.on).toBe('function');
+    expect(socket1.on.mock.calls[0]).toEqual([ 'wazzah', fn ]);
+    expect(socket2.on.mock.calls[0]).toEqual([ 'wazzah', fn ]);
+  });
 });
