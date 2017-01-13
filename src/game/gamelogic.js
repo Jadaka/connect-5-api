@@ -11,13 +11,16 @@ class Gamelogic {
   constructor() {
     this.board = [];
     this.winner = null;
+
+    // cache the last move for quicker processing
+    this._lastplayed = null;
+    this._lastplayer = null;
+
     // _dict is a key-value pairing of letter to numbers (a=0 ... s=19)
     this._dict = 'abcdefghijklmnopqrs'.split('').reduce((dict, letter, idx) => {
       dict[letter] = idx;
       return dict;
     }, {});
-    this._lastplayed = null;
-    this._lastplayer = null;
     
     // create 19 inner arrays
     for (var i = 0; i < 19; i++) {
