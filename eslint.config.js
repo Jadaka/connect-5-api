@@ -21,6 +21,7 @@ module.exports = {
     "consistent-return": "off",
     "arrow-body-style": "off",
     "object-shorthand": "off",
-    "func-names": "off"
+    "func-names": "off",
+    "no-plusplus": "off"
   }
 }
