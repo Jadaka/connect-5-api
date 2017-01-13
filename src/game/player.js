@@ -14,6 +14,11 @@ class Player {
     }
     this.socket = socket;
     this.user = user;
+    this.ready = false;
+  }
+
+  ready() {
+    this.ready = true;
   }
 
   win() {
