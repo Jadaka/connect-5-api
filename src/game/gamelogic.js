@@ -13,8 +13,8 @@ class Gamelogic {
     this.winner = null;
 
     // cache the last move for quicker processing
-    this.lastplayed = null;
-    this.lastplayer = null;
+    this.lastPlayed = null;
+    this.lastPlayerId = null;
 
     // dict is a key-value pairing of letter to numbers (a=0 ... s=19)
     this.dict = 'abcdefghijklmnopqrs'.split('').reduce((dict, letter, idx) => {
@@ -28,8 +28,8 @@ class Gamelogic {
     }
   }
 
-  set(id, player) {
-    if (player !== 1 && player !== 2) {
+  set(id, playerId) {
+    if (playerId !== 1 && playerId !== 2) {
       throw new Error('set() should only be called with a tile ID and playerId (1 or 2)');
     }
     const [row, col] = this.idToCoords(id);
@@ -37,9 +37,9 @@ class Gamelogic {
     if (this.board[row][col]) {
       throw new Error('set() was called for an already occupied tile. id = ', id);
     }
-    this.board[row][col] = player;
-    this.lastplayed = id;
-    this.lastplayer = player;
+    this.board[row][col] = playerId;
+    this.lastPlayed = id;
+    this.lastPlayerId = playerId;
     return true;
   }
 
@@ -60,11 +60,11 @@ class Gamelogic {
      *  Utility function which returns a boolean for whether there is a winning player or not
      *  It also overwrites the winner property of this logic instance when a winner is found
      */
-    const [row, col] = this.idToCoords(this.lastplayed);
+    const [row, col] = this.idToCoords(this.lastPlayed);
     const winners = ['checkRow', 'checkCol', 'checkMajor', 'checkMinor'].map((toCheck) => {
       const result = this[toCheck](row, col);
       if (result) {
-        this.winner = this.lastplayer;
+        this.winner = this.lastPlayerId;
       }
       return result;
     });
@@ -74,11 +74,11 @@ class Gamelogic {
   checkRow(row, col) {
     const origCol = col;
     let count = 1;
-    while (this.board[row][++col] === this.lastplayer) {
+    while (this.board[row][++col] === this.lastPlayerId) {
       count++;
     }
     col = origCol;
-    while (this.board[row][--col] === this.lastplayer) {
+    while (this.board[row][--col] === this.lastPlayerId) {
       count++;
     }
     return count >= 5;
@@ -87,11 +87,11 @@ class Gamelogic {
   checkCol(row, col) {
     const origRow = row;
     let count = 1;
-    while (this.board[++row] && this.board[row][col] === this.lastplayer) {
+    while (this.board[++row] && this.board[row][col] === this.lastPlayerId) {
       count++;
     }
     row = origRow;
-    while (this.board[--row] && this.board[row][col] === this.lastplayer) {
+    while (this.board[--row] && this.board[row][col] === this.lastPlayerId) {
       count++;
     }
     return count >= 5;
@@ -100,11 +100,11 @@ class Gamelogic {
   checkMajor(row, col) {
     const orig = [row, col];
     let count = 1;
-    while (this.board[row + 1] && this.board[++row][++col] === this.lastplayer) {
+    while (this.board[row + 1] && this.board[++row][++col] === this.lastPlayerId) {
       count++;
     }
     [row, col] = orig;
-    while (this.board[row - 1] && this.board[--row][--col] === this.lastplayer) {
+    while (this.board[row - 1] && this.board[--row][--col] === this.lastPlayerId) {
       count++;
     }
     return count >= 5;
@@ -113,11 +113,11 @@ class Gamelogic {
   checkMinor(row, col) {
     const orig = [row, col];
     let count = 1;
-    while (this.board[row + 1] && this.board[++row][--col] === this.lastplayer) {
+    while (this.board[row + 1] && this.board[++row][--col] === this.lastPlayerId) {
       count++;
     }
     [row, col] = orig;
-    while (this.board[row - 1] && this.board[--row][++col] === this.lastplayer) {
+    while (this.board[row - 1] && this.board[--row][++col] === this.lastPlayerId) {
       count++;
     }
     return count >= 5;
