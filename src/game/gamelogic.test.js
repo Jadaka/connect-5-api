@@ -15,26 +15,26 @@ describe('The logic instance', () => {
   });
 
   it('should contain a dictionary of letter to integer pariings', () => {
-    expect(gamelogic._dict.a).toBe(0);
-    expect(gamelogic._dict.e).toBe(4);
-    expect(gamelogic._dict.s).toBe(18);
+    expect(gamelogic.dict.a).toBe(0);
+    expect(gamelogic.dict.e).toBe(4);
+    expect(gamelogic.dict.s).toBe(18);
   });
 
-  describe('the _idToCoords function', () => {
+  describe('the idToCoords function', () => {
     it('should exist', () => {
-      expect(typeof gamelogic._idToCoords).toBe('function');
+      expect(typeof gamelogic.idToCoords).toBe('function');
     });
 
     it('should error handle', () => {
-      expect(() => {gamelogic._idToCoords('za')}).toThrow();
-      expect(() => {gamelogic._idToCoords('az')}).toThrow();
+      expect(() => {gamelogic.idToCoords('za')}).toThrow();
+      expect(() => {gamelogic.idToCoords('az')}).toThrow();
     });
 
     it('should return the correct coordinates', () => {
-      expect(gamelogic._idToCoords('aa')).toEqual([0, 0]);
-      expect(gamelogic._idToCoords('cc')).toEqual([2, 2]);
-      expect(gamelogic._idToCoords('gb')).toEqual([6, 1]);
-      expect(gamelogic._idToCoords('ds')).toEqual([3, 18]);
+      expect(gamelogic.idToCoords('aa')).toEqual([0, 0]);
+      expect(gamelogic.idToCoords('cc')).toEqual([2, 2]);
+      expect(gamelogic.idToCoords('gb')).toEqual([6, 1]);
+      expect(gamelogic.idToCoords('ds')).toEqual([3, 18]);
     });
   })
 
@@ -66,25 +66,25 @@ describe('The logic instance', () => {
       expect(gamelogic.board[3][4]).toBe(0);
     });
 
-    it('should update the _lastplayed and _lastplayer property', () => {
+    it('should update the lastplayed and lastplayer property', () => {
       gamelogic = new Gamelogic();
       gamelogic.set('ss', 1);
-      expect(gamelogic._lastplayed).toBe('ss');
-      expect(gamelogic._lastplayer).toBe(1);
+      expect(gamelogic.lastplayed).toBe('ss');
+      expect(gamelogic.lastplayer).toBe(1);
       gamelogic.set('ee', 2);
-      expect(gamelogic._lastplayed).toBe('ee');
-      expect(gamelogic._lastplayer).toBe(2);
+      expect(gamelogic.lastplayed).toBe('ee');
+      expect(gamelogic.lastplayer).toBe(2);
     })
   });
 
   describe('the check winner function', () => {
 
     it('should exist', () => {
-      expect(typeof gamelogic._checkWinner).toBe('function');
+      expect(typeof gamelogic.checkWinner).toBe('function');
     });
 
     it('should return false for a non-winning board', () => {
-      expect(gamelogic._checkWinner()).toBe(false);
+      expect(gamelogic.checkWinner()).toBe(false);
       [
         ['ef'],
         ['aa', 'ab', 'ac', 'ad'],
@@ -93,7 +93,7 @@ describe('The logic instance', () => {
       ].forEach(toPlay => {
         gamelogic = new Gamelogic();
         toPlay.forEach(id => gamelogic.set(id, 1));
-        expect(gamelogic._checkWinner()).toBe(false);
+        expect(gamelogic.checkWinner()).toBe(false);
         it('should not update the winner property', () => {
           expect(gamelogic.winner).toBe(null);
         });
@@ -109,7 +109,7 @@ describe('The logic instance', () => {
       ].forEach(toPlay => {
         gamelogic = new Gamelogic();
         toPlay.forEach(id => gamelogic.set(id, 1));
-        expect(gamelogic._checkWinner()).toBe(true);
+        expect(gamelogic.checkWinner()).toBe(true);
         it('should update the winner property', () => {
           expect(gamelogic.winner).toBe(1);
         });

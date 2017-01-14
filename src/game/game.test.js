@@ -30,8 +30,8 @@ describe('the game instance', () => {
   });
 
   it('should create player instances and store them', () => {
-    expect(game.player1 instanceof Player).toBe(true);
-    expect(game.player2 instanceof Player).toBe(true);
+    expect(game.p1 instanceof Player).toBe(true);
+    expect(game.p2 instanceof Player).toBe(true);
   });
 
   it('should instantiate a new gamelogic instance and store it', () => {
@@ -39,7 +39,7 @@ describe('the game instance', () => {
   });
 
   it('should hold a moves array to store played moves', () => {
-    expect(Array.isArray(game._moves)).toBe(true);
+    expect(Array.isArray(game.moves)).toBe(true);
   });
 
   it('should have an emit method that invokes emit on both clients', () => {

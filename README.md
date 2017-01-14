@@ -9,16 +9,15 @@ Connect 5 back-end API using Socket.IO
 
 Certain eventing requires a duplex communication, so the documentation is organized by the **intent** of the events.
 
-Within each event contains the various data fields that are required / optional. Any field is required unless specified otherwise by a `?` symbol.
+Within each event, there are data fields that are required / optional. Any field is required unless specified otherwise by a `?` symbol.
 
-When a client initiates an emission, the server will always acknowledge the receiving of that signal with an event name identical to the client emission with `.response` appended to the end of it in case the client must render/complete a task in response.
+When a client initiates an emission, the server will always acknowledge the receival of that signal with an event name identical to the client emission with `.response` appended to the end of it.
 
-When a server initiates an emission, the client **must** acknowledge the completion of any client-side changes that must render/complete before the server knows to move on. This is done by emitting an event identical to the server emission with `.response` appended to the end of it.
+When a server initiates an emission, the client **must** acknowledge the completion of any client-side changes unless otherwise specified. This is done by emitting an event identical to the server emission with `.response` appended to the end of it.
 
 ## General
----
 
-### Error
+**Error:**
 
 ```plaintext
 SERVER: 'err'
@@ -28,14 +27,12 @@ SERVER: 'err'
 ```
 
 ## Authenticating
----
 
 [TBD]
 
 ## Queue
----
 
-### Joining a queue:
+**Joining a queue:**
 
 ```plaintext
 CLIENT: 'joinQueue'
@@ -44,12 +41,11 @@ CLIENT: 'joinQueue'
 
 SERVER: 'joinQueue.response'
   data:
-    (none)
+    success: BOOLEAN
+    err    ? STRING
 ```
 
----
-
-### When a match is found:
+**When a match is found:**
 
 ```plaintext
 SERVER: 'matchFound'
@@ -63,6 +59,8 @@ CLIENT: 'matchFound.response'
 
 ## In-Game:
 
+**When a server is ready to begin a match:**
+
 ```plaintext
 SERVER: 'gameReady'
   data:
@@ -74,4 +72,41 @@ CLIENT: 'gameReady.response'
     (none)
 ```
 
-[TODO]
+**When a turn is starting / an opponent has made a move:**
+
+```plaintext
+SERVER: 'turnStart'
+  data:
+    board     : ARRAY<ARRAY>
+    lastPlayed: STRING
+    turn      : playerId
+
+CLIENT: (none expected)
+```
+
+**When a player is emitting a move:**
+
+```plaintext
+CLIENT: 'turnEnd'
+  data:
+    tileId: STRING
+
+SERVER: (none expected)
+```
+
+**When a game has ended:**
+
+```plaintext
+SERVER: 'gameEnded'
+  data:
+    board     : ARRAY<ARRAY>
+    lastPlayed: STRING
+```
+
+**When an opponent has disconnected:**
+
+```plaintext
+SERVER: 'opponentDisonnected'
+  data:
+    (none)
+```

@@ -1,7 +1,7 @@
 import { some } from 'lodash';
 
 /**
- * 
+ *
  *  Gamelogic Constructor
  *
  *  Game logic instances are primary used to maintain board state of each game.
@@ -13,114 +13,111 @@ class Gamelogic {
     this.winner = null;
 
     // cache the last move for quicker processing
-    this._lastplayed = null;
-    this._lastplayer = null;
+    this.lastPlayed = null;
+    this.lastPlayerId = null;
 
-    // _dict is a key-value pairing of letter to numbers (a=0 ... s=19)
-    this._dict = 'abcdefghijklmnopqrs'.split('').reduce((dict, letter, idx) => {
+    // dict is a key-value pairing of letter to numbers (a=0 ... s=19)
+    this.dict = 'abcdefghijklmnopqrs'.split('').reduce((dict, letter, idx) => {
       dict[letter] = idx;
       return dict;
     }, {});
     
     // create 19 inner arrays
-    for (var i = 0; i < 19; i++) {
-      let row = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-      this.board.push(row);
+    for (let i = 0; i < 19; i++) {
+      this.board.push([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
     }
   }
 
-  set(id, player) {
-    if (player !== 1 && player !== 2) {
+  set(id, playerId) {
+    if (playerId !== 1 && playerId !== 2) {
       throw new Error('set() should only be called with a tile ID and playerId (1 or 2)');
     }
-    const [row, col] = this._idToCoords(id);
+    const [row, col] = this.idToCoords(id);
     // if the tile is already taken
     if (this.board[row][col]) {
       throw new Error('set() was called for an already occupied tile. id = ', id);
     }
-    this.board[row][col] = player;
-    this._lastplayed = id;
-    this._lastplayer = player;
+    this.board[row][col] = playerId;
+    this.lastPlayed = id;
+    this.lastPlayerId = playerId;
     return true;
   }
 
-  _idToCoords(id) {
-    const row = this._dict[id[0]];
-    const col = this._dict[id[1]];
+  idToCoords(id) {
+    const row = this.dict[id[0]];
+    const col = this.dict[id[1]];
     if (row === undefined || col === undefined) {
-      throw new Error('invalid ID passed into _idToCoords');
+      throw new Error('invalid ID passed into idToCoords');
     }
     return [row, col];
   }
 
-  _checkWinner() {
+  checkWinner() {
     /**
      *
-     *  _checkWinner: BOOLEAN
+     *  checkWinner: BOOLEAN
      *
      *  Utility function which returns a boolean for whether there is a winning player or not
      *  It also overwrites the winner property of this logic instance when a winner is found
      */
-    const [row, col] = this._idToCoords(this._lastplayed);
-    return some(
-      ['_checkRow', '_checkCol', '_checkMajorDiagnol', '_checkMinorDiagnol']
-        .map(toCheck => {
-          const result = this[toCheck](row, col);
-          if (result) {
-            this.winner = this._lastplayer;
-          }
-          return result;
-        })
-    );
+    const [row, col] = this.idToCoords(this.lastPlayed);
+    const winners = ['checkRow', 'checkCol', 'checkMajor', 'checkMinor'].map((toCheck) => {
+      const result = this[toCheck](row, col);
+      if (result) {
+        this.winner = this.lastPlayerId;
+      }
+      return result;
+    });
+    return some(winners);
   }
 
-  _checkRow(row, col) {
+  checkRow(row, col) {
     const origCol = col;
     let count = 1;
-    while (this.board[row][++col] === this._lastplayer) {
+    while (this.board[row][++col] === this.lastPlayerId) {
       count++;
     }
     col = origCol;
-    while (this.board[row][--col] === this._lastplayer) {
+    while (this.board[row][--col] === this.lastPlayerId) {
       count++;
     }
     return count >= 5;
   }
 
-  _checkCol(row, col) {
+  checkCol(row, col) {
     const origRow = row;
     let count = 1;
-    while (this.board[++row] && this.board[row][col] === this._lastplayer) {
+    while (this.board[++row] && this.board[row][col] === this.lastPlayerId) {
       count++;
     }
     row = origRow;
-    while (this.board[--row] && this.board[row][col] === this._lastplayer) {
+    while (this.board[--row] && this.board[row][col] === this.lastPlayerId) {
       count++;
     }
     return count >= 5;
   }
 
-  _checkMajorDiagnol(row, col) {
+  checkMajor(row, col) {
     const orig = [row, col];
     let count = 1;
-    while (this.board[row + 1] && this.board[++row][++col] === this._lastplayer) {
+    while (this.board[row + 1] && this.board[++row][++col] === this.lastPlayerId) {
       count++;
     }
     [row, col] = orig;
-    while (this.board[row - 1] && this.board[--row][--col] === this._lastplayer) {
+    while (this.board[row - 1] && this.board[--row][--col] === this.lastPlayerId) {
       count++;
     }
     return count >= 5;
   }
 
-  _checkMinorDiagnol(row, col) {
+  checkMinor(row, col) {
     const orig = [row, col];
     let count = 1;
-    while (this.board[row + 1] && this.board[++row][--col] === this._lastplayer) {
+    while (this.board[row + 1] && this.board[++row][--col] === this.lastPlayerId) {
       count++;
     }
     [row, col] = orig;
-    while (this.board[row - 1] && this.board[--row][++col] === this._lastplayer) {
+    while (this.board[row - 1] && this.board[--row][++col] === this.lastPlayerId) {
       count++;
     }
     return count >= 5;
