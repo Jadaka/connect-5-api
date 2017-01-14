@@ -16,10 +16,12 @@ import setupEvents from './events';
 class Game {
   constructor({ user1, socket1, user2, socket2 }) {
     this.p1 = new Player({
+      id    : 1,
       socket: socket1,
       user  : user1,
     });
     this.p2 = new Player({
+      id    : 2,
       socket: socket2,
       user  : user2,
     });

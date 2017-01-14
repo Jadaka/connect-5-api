@@ -8,10 +8,11 @@
  *
  */
 class Player {
-  constructor({ socket, user }) {
+  constructor({ socket, user, id }) {
     if (!socket || !user) {
       throw new Error('Both socket and user objects are required for Player instantiations');
     }
+    this.id = id;
     this.socket = socket;
     this.user = user;
     this.ready = false;
