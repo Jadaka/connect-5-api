@@ -17,7 +17,8 @@ const turnEnd = ({ game, player }, data) => {
 
   try {
     logic.set(data.tileId, player.id);
-
+    game.moves.push(data.tileId);
+    
     const { board, lastPlayed, winner } = logic;
     const turn = game.getOpponent(player).id;
 
