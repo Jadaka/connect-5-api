@@ -1,0 +1,1 @@
+import setupEvents from './events';
