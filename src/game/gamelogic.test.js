@@ -66,14 +66,14 @@ describe('The logic instance', () => {
       expect(gamelogic.board[3][4]).toBe(0);
     });
 
-    it('should update the lastplayed and lastplayer property', () => {
+    it('should update the lastPlayed and lastPlayerId property', () => {
       gamelogic = new Gamelogic();
       gamelogic.set('ss', 1);
-      expect(gamelogic.lastplayed).toBe('ss');
-      expect(gamelogic.lastplayer).toBe(1);
+      expect(gamelogic.lastPlayed).toBe('ss');
+      expect(gamelogic.lastPlayerId).toBe(1);
       gamelogic.set('ee', 2);
-      expect(gamelogic.lastplayed).toBe('ee');
-      expect(gamelogic.lastplayer).toBe(2);
+      expect(gamelogic.lastPlayed).toBe('ee');
+      expect(gamelogic.lastPlayerId).toBe(2);
     })
   });
 

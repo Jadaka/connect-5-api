@@ -42,9 +42,14 @@ class Game {
   initialize() {
     setupEvents(this);
 
+    // let the clients know that they have been paired up!
     this.emit('matchFound', {
       p1: this.p1,
       p2: this.p2,
+    });
+    this.on('matchFound.response', ({ player }) => {
+      player.ready();
+      this.start();
     });
   }
 
@@ -52,25 +57,25 @@ class Game {
     if (this.p1.ready && this.p2.ready) {
       this.emit('gameReady', {
         board: this.logic.board,
-      }, [ { playerId: 1 }, { playerId: 2 } ]);
+      }, [{ playerId: 1 }, { playerId: 2 }]);
     }
   }
 
-  emit(event, data, separate) {
+  emit(event, data, separate = []) {
     const players = ['p1', 'p2'];
-    if (!separate) {
-      players.forEach((player) => {
-        this[player].emit(event, data)
-      });
-    } else {
-      players.forEach((player, idx) => {
-        this[player].emit(event, Object.assign(data, separate[idx]))
-      });
-    }
+    players.forEach((player, idx) => {
+      this[player].emit(event, Object.assign(data, separate[idx] || {}));
+    });
   }
 
   on(event, cb) {
-    ['p1', 'p2'].forEach(player => this[player].on(event, cb.bind(null, this[player])));
+    // every listener callback will be invoked with the game & player within the options (first) parameter
+    ['p1', 'p2'].forEach((player) => {
+      this[player].on(event, cb.bind(null, { 
+        game: this,
+        player: this[player],
+      }));
+    });
   }
 
   // convenience method to grab the player or opponent of a player

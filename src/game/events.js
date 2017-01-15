@@ -1,27 +1,44 @@
+import { each } from 'lodash';
+
 /**
  *
- *  Events
- *  
- *  Decorates a game instance by attaching socket.io listeners
+ *  Event handlers for socket events
+ *
  */
-const setupEvents = (game) => {
-  game.on('matchFound.response', (player) => {
-    player.ready();
-    game.start();
-  });
+const turnEnd = ({ game, player }, data) => {
+  const logic = game.logic;
+  if (logic.lastPlayerId === player) {
+    player.emit('turnEnd.response', {
+      success: false,
+      err    : 'not your turn',
+    });
+    return;
+  }
 
-  game.on('turnEnd', (player, data) => {
-    if (game.logic.lastPlayerId === player) {
-      return player.emit('turnEnd.response', {
-        err: 'not your turn yet'
-      });
+  try {
+    logic.set(data.tileId, player.id);
+
+    const { board, lastPlayed, winner } = logic;
+    const turn = game.getOpponent(player).id;
+
+    if (logic.checkWinner()) {
+      game.emit('gameEnded', { board, lastPlayed, winner });
     } else {
-      // call gamelogic set (TODO)
-      game.emit('turnStart', {
-        board: game.logic.board,
-        lastPlayed: game.logic.lastPlayerId,
-        turn: game.getOpponent(player).id,
-      });
+      game.emit('turnStart', { board, lastPlayed, turn });
     }
+  } catch (e) {
+    console.error('error in event: "turnEnd"');
+    console.error(e);
+  }
+};
+
+const events = {
+  turnEnd,
+};
+
+export default (game) => {
+  // decorate our game instances with each listener
+  each(events, (cb, event) => {
+    game.on(event, cb);
   });
 };
