@@ -26,16 +26,13 @@ class Game {
       user  : user2,
     });
 
-    // keep track of who's turn it is
-    this.turn = null;
-
     // game logic
     this.logic = new Gamelogic();
     
     // record moves for stats purposes
     this.moves = [];
 
-    // initialize the app
+    // initialize the game
     this.initialize();
   }
 
