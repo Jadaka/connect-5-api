@@ -1,5 +1,9 @@
 # dependencies
 node_modules/
+yarn.lock
 
 # config files
 src/config.js
+
+# debuggers
+npm-debug.log

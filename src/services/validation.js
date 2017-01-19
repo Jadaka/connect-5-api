@@ -34,5 +34,5 @@ export const isRequestInvalid = async (req, res) => {
  *  @url https://github.com/ctavan/express-validator
  */
 export const customValidators = {
-  isArray : value => Array.isArray(value),
+  isArray: value => Array.isArray(value),
 };

@@ -62,7 +62,7 @@ export const signUp = async (req, res) => {
   }
 
   try {
-    const { username, password, email, age, location, gender } = req.body;
+    const { username, password, email } = req.body;
     let user = await User.findOne({ where: { username } });
     if (user) {
       return res.status(409).json({
