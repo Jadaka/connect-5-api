@@ -8,6 +8,7 @@
     "express-validator": "^3.1.2",
     "jsonwebtoken": "^7.2.1",
     "lodash": "^4.17.4",
+    "mysql": "^2.12.0",
     "sequelize": "^3.28.0",
     "socket.io": "^1.7.2"
   },
@@ -27,6 +28,7 @@
   },
   "scripts": {
     "start": "nodemon bin/entry.js --exec 'npm run lint --silent && node'",
+    "schema": "node bin/schema.js",
     "lint": "eslint -c eslint.config.js src/**/*.js",
     "test": "jest"
   }
