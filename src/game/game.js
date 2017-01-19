@@ -66,10 +66,11 @@ class Game {
   }
 
   on(event, cb) {
-    // every listener callback will be invoked with the game & player within the options (first) parameter
+    // every listener callback will be invoked with the game & player
+    // within the options (first) parameter
     ['p1', 'p2'].forEach((player) => {
-      this[player].on(event, cb.bind(null, { 
-        game: this,
+      this[player].on(event, cb.bind(null, {
+        game  : this,
         player: this[player],
       }));
     });
