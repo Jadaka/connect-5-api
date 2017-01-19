@@ -3,3 +3,6 @@ node_modules/
 
 # config files
 src/config.js
+
+# debuggers
+npm-debug.log
