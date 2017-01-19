@@ -1,5 +1,5 @@
 import { Server } from 'http';
-import express from 'express';
+import Express from 'express';
 import Io from 'socket.io';
 
 import initialize from './initialize';
