@@ -3,7 +3,26 @@ Connect 5 back-end API using Socket.IO
 
 # RESTful API
 
-[TODO]
+## Authentication
+
+**Sign in:**
+
+```plaintext
+/api/auth/signIn
+  Body
+    username: STRING
+    password: STRING
+```
+
+**Sign up:**
+
+```plaintext
+/api/auth/signUp
+  Body
+    username: STRING
+    email   : STRING
+    password: STRING
+```
 
 # Socket.io API
 
