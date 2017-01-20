@@ -29,7 +29,7 @@
   "scripts": {
     "start": "nodemon bin/entry.js --exec 'npm run lint --silent && node'",
     "schema": "node bin/schema.js",
-    "lint": "eslint -c eslint.config.js src/**/*.js",
+    "lint": "eslint --quiet -c eslint.config.js src/**/*.js",
     "test": "jest"
   }
 }
