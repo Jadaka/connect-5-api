@@ -33,13 +33,13 @@ const turnEnd = ({ game, player }, data) => {
   }
 };
 
-const events = {
+const gameEvents = {
   turnEnd,
 };
 
 export default (game) => {
   // decorate our game instances with each listener
-  each(events, (cb, event) => {
+  each(gameEvents, (cb, event) => {
     game.on(event, cb);
   });
 };
