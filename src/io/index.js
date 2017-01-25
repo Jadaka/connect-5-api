@@ -1,7 +1,9 @@
 import { verify } from 'jsonwebtoken';
+import { each } from 'lodash';
 
 import { User } from '../models';
 import { jwtSecret } from '../config';
+import lobbyEvents from './lobby/events';
 
 /**
  *
@@ -9,7 +11,7 @@ import { jwtSecret } from '../config';
  *
  *  @url {https://goo.gl/nKzWJB}
  */
-export const connections = new WeakMap();
+const connections = new WeakMap();
 
 /**
  *
@@ -49,11 +51,15 @@ export const initSockets = (io) => {
     }
   });
 
-  io.on('connection', () => {
+  io.on('connection', (socket) => {
     /**
      *
      *  Event listeners
      */
-    // TODO
+    const { user } = connections.get(socket);
+
+    each(lobbyEvents, (cb, eventName) => {
+      socket.on(eventName, cb.bind({ socket, user }));
+    });
   });
 };
