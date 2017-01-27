@@ -47,7 +47,11 @@ SERVER: 'err'
 
 ## Authenticating
 
-[TBD]
+An authentication jwt (json web token) is required to connect to the server via websocket. This can be made by supplying a query string to the `io.connect` function of socket.io client:
+
+```javascript
+io.connect(`localhost:3001/?token=${USER_TOKEN}`);
+```
 
 ## Queue
 
