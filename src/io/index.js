@@ -58,8 +58,10 @@ export const initSockets = (io) => {
      */
     const { user } = connections.get(socket);
 
-    each(lobbyEvents, (cb, eventName) => {
-      socket.on(eventName, cb.bind({ socket, user }));
+    each(lobbyEvents, (event, eventName) => {
+      socket.on(eventName, (data) => {
+        event({ socket, user, connections }, data);
+      });
     });
   });
 };
