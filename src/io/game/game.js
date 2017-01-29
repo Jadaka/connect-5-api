@@ -41,8 +41,8 @@ class Game {
 
     // let the clients know that they have been paired up!
     this.emit('matchFound', {
-      p1: this.p1,
-      p2: this.p2,
+      p1: this.p1.user.getData,
+      p2: this.p2.user.getData,
     });
     this.on('matchFound.response', ({ player }) => {
       player.ready();
@@ -61,7 +61,7 @@ class Game {
   emit(event, data, separate = []) {
     const players = ['p1', 'p2'];
     players.forEach((player, idx) => {
-      this[player].emit(event, Object.assign(data, separate[idx] || {}));
+      this[player].emit(event, Object.assign({}, data, separate[idx] || {}));
     });
   }
 
