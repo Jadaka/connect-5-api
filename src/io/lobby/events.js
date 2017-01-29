@@ -4,9 +4,6 @@ const _queue = [];
 
 const joinQueue = ({ socket, user, connections }) => {
   _queue.push(socket);
-  console.log('=======');
-  console.log('socket pushed to queue');
-  console.log('queue.length = ', _queue.length);
   if (_queue.length >= 2) {
     const socket1 = _queue.pop();
     const socket2 = _queue.pop();
